@@ -55,7 +55,6 @@ const Navbar = () => {
           <NavLink href="#home">Home</NavLink>
           <NavLink href="#about">About</NavLink>
           <NavLink href="#projects">Projects</NavLink>
-          <NavLink href="#blogs">Blogs</NavLink>
         </div>
 
         <button className="ml-2 rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition-transform hover:scale-105 active:scale-95">
@@ -185,16 +184,11 @@ export default function Home() {
 // Rename Hero to HeroInternal and accept ref
 const HeroInternal = ({ cardRef }: { cardRef: React.RefObject<HTMLDivElement | null> }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isLoaded = useRef(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      isLoaded.current = true;
-    }, 1800);
-
     const handleMouseMove = (e: MouseEvent) => {
-      if (!cardRef.current || !containerRef.current || !isLoaded.current) return;
-      
+      if (!cardRef.current || !containerRef.current) return;
+
       // Only apply parallax if we haven't scrolled too far
       if (window.scrollY > 300) return;
 
@@ -216,7 +210,6 @@ const HeroInternal = ({ cardRef }: { cardRef: React.RefObject<HTMLDivElement | n
     window.addEventListener("mousemove", handleMouseMove);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      clearTimeout(timer);
     };
   }, [cardRef]);
 
@@ -257,6 +250,12 @@ const HeroInternal = ({ cardRef }: { cardRef: React.RefObject<HTMLDivElement | n
                 initial={{ opacity: 0, rotateX: 180 }}
                 animate={{ opacity: 1, rotateX: 0 }}
                 transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+                onAnimationComplete={() => {
+                  if (cardRef.current) {
+                    cardRef.current.style.transform = "";
+                    gsap.set(cardRef.current, { rotateX: 0, rotateY: 0, transformPerspective: 1000 });
+                  }
+                }}
                 className="relative h-[480px] w-[320px] rounded-[2.5rem] border border-white/10 bg-neutral-900 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)] md:h-[550px] md:w-[380px] [transform-style:preserve-3d]"
               >
                 {/* Thickness Layers */}
