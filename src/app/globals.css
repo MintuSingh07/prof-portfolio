@@ -18,6 +18,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --color-accent: #4ade80;
 }
 
 @theme inline {
@@ -28,7 +29,7 @@
   --font-sans: var(--font-inter);
   --font-billamount: "BillaMount", sans-serif;
   --font-ramillas: "TTRamillas", serif;
-  --color-accent: #d4af37;
+  --color-accent: var(--color-accent);
 }
 
 @media (prefers-color-scheme: dark) {

@@ -433,6 +433,11 @@ const HeroInternal = ({
         </div>
       </div>
 
+      {/* Color Switcher — Bottom Right */}
+      <div className="absolute bottom-12 right-12 z-50">
+        <ColorSwitcher />
+      </div>
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -447,6 +452,84 @@ const HeroInternal = ({
         </div>
       </motion.div>
     </section>
+  );
+};
+
+// --- Color Switcher Component ---
+
+const ColorSwitcher = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  const themes = [
+    { name: "Indigo", color: "#6366f1" },
+    { name: "Gold", color: "#fbbf24" },
+    { name: "Mint", color: "#4ade80" },
+  ];
+
+  const applyTheme = (color: string) => {
+    document.documentElement.style.setProperty("--color-accent", color);
+  };
+
+  return (
+    <div className="relative flex items-center justify-end h-10 min-w-[120px]">
+      <div className="flex items-center">
+        {themes.map((theme, index) => (
+          <motion.button
+            key={theme.name}
+            onClick={(e) => {
+              if (!isExpanded) {
+                setIsExpanded(true);
+                e.stopPropagation();
+              } else {
+                applyTheme(theme.color);
+              }
+            }}
+            initial={false}
+            animate={{
+              // Negative margin-left creates the overlap from left-to-right
+              // First item (index 0) has no margin.
+              marginLeft: index === 0 ? 0 : isExpanded ? 12 : -20,
+              scale: 1,
+            }}
+            transition={{ type: "spring", damping: 20, stiffness: 200 }}
+            whileHover={{ 
+              scale: 1.15, 
+              zIndex: 100,
+              boxShadow: `0 0 20px ${theme.color}60`
+            }}
+            whileTap={{ scale: 0.95 }}
+            className="h-8 w-8 rounded-full border-2 border-white shadow-[0_4px_12px_rgba(0,0,0,0.4)] cursor-pointer transition-shadow shrink-0 relative"
+            style={{ 
+              backgroundColor: theme.color,
+              zIndex: 50 + index,
+            }}
+            title={theme.name}
+          />
+        ))}
+        
+        {/* Transparent overlay for the stack when collapsed to catch first click */}
+        {!isExpanded && (
+          <div 
+            className="absolute right-0 h-8 w-8 rounded-full cursor-pointer z-[110]" 
+            onClick={() => setIsExpanded(true)}
+          />
+        )}
+      </div>
+      
+      {/* Muted close icon */}
+      {isExpanded && (
+        <motion.button
+          initial={{ opacity: 0, x: 10 }}
+          animate={{ opacity: 1, x: 0 }}
+          onClick={() => setIsExpanded(false)}
+          className="ml-2 p-1.5 rounded-full bg-white/5 hover:bg-white/15 text-white/30 hover:text-white transition-colors"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </motion.button>
+      )}
+    </div>
   );
 };
 
