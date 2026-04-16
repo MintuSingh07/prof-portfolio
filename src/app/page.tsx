@@ -1,11 +1,66 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { ReactLenis, useLenis } from "lenis/react";
 import { cn } from "@/lib/utils";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+const projectsData = {
+  websites: [
+    {
+      id: "01",
+      client: "Nexus Analytics",
+      title: "AI Business Dashboard",
+      image: "/projects/nexus.png",
+      tags: ["React", "GSAP", "AI"],
+      gradient: "from-blue-600/20 to-purple-600/20",
+    },
+    {
+      id: "02",
+      client: "Pixel Forge",
+      title: "Digital Agency Portfolio",
+      image: null,
+      tags: ["Next.js", "Framer Motion"],
+      gradient: "from-amber-500/20 to-orange-600/20",
+    },
+    {
+      id: "03",
+      client: "Cloud Horizon",
+      title: "SaaS Marketing Site",
+      image: null,
+      tags: ["Tailwind", "Next.js"],
+      gradient: "from-indigo-500/20 to-violet-600/20",
+    },
+  ],
+  uiux: [
+    {
+      id: "01",
+      client: "Swift Pay",
+      title: "Fintech Mobile App",
+      image: null,
+      tags: ["App Design", "Banking"],
+      gradient: "from-emerald-500/20 to-cyan-600/20",
+    },
+    {
+      id: "02",
+      client: "Lumina Health",
+      title: "Wellness Platform",
+      image: null,
+      tags: ["MedTech", "UX Research"],
+      gradient: "from-rose-500/20 to-orange-600/20",
+    },
+    {
+      id: "03",
+      client: "Nova Stream",
+      title: "Entertainment UI",
+      image: null,
+      tags: ["Dark Mode", "Streaming"],
+      gradient: "from-purple-500/20 to-blue-600/20",
+    },
+  ],
+};
 
 // --- Components ---
 
@@ -42,7 +97,7 @@ const NavLink = ({
   );
 };
 
-const Navbar = () => {
+const Navbar = ({ isProjectsActive }: { isProjectsActive: boolean }) => {
   return (
     <motion.header
       initial={{ y: -100, opacity: 0 }}
@@ -50,22 +105,54 @@ const Navbar = () => {
       transition={{ duration: 0.8, ease: "circOut" }}
       className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4"
     >
-      <nav className="flex items-center gap-2 rounded-full border border-white/10 bg-black/50 p-1.5 backdrop-blur-xl">
-        <div className="flex items-center gap-1 pl-1 pr-4">
+      <nav className="flex items-center gap-2 rounded-full border border-white/10 bg-black/50 p-1.5 backdrop-blur-xl min-w-[300px] justify-between">
+        <div className="flex items-center gap-1 pl-1">
           <div className="h-8 w-8 overflow-hidden rounded-full border border-white/20 bg-white/10">
             <div className="h-full w-full bg-neutral-800" />
           </div>
         </div>
 
-        <div className="hidden items-center gap-1 md:flex">
-          <NavLink href="#home">Home</NavLink>
-          <NavLink href="#about">About</NavLink>
-          <NavLink href="#projects">Projects</NavLink>
+        <div className="flex-1 flex justify-center overflow-hidden h-9">
+          <AnimatePresence mode="wait">
+            {!isProjectsActive ? (
+              <motion.div
+                key="nav-links"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -20, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="hidden items-center gap-1 md:flex"
+              >
+                <NavLink href="#home">Home</NavLink>
+                <NavLink href="#about">About</NavLink>
+                <NavLink href="#projects">Projects</NavLink>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="available-status"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -20, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="flex items-center gap-3 px-4"
+              >
+                <div className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+                </div>
+                <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-white whitespace-nowrap">
+                  Available for Work
+                </span>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
-        <button className="ml-2 rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition-transform hover:scale-105 active:scale-95">
-          Contact
-        </button>
+        {!isProjectsActive && (
+          <button className="rounded-full bg-white px-5 py-2 text-sm font-semibold text-black transition-transform hover:scale-105 active:scale-95">
+            Contact
+          </button>
+        )}
       </nav>
     </motion.header>
   );
@@ -79,6 +166,9 @@ export default function Home() {
   const cardRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
+  const filterCapsuleRef = useRef<HTMLDivElement>(null);
+  const [isProjectsActive, setIsProjectsActive] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<"websites" | "uiux">("websites");
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -87,8 +177,8 @@ export default function Home() {
 
     const card = cardRef.current;
 
-    // Create the scroll-linked animation
-    const tl = gsap.timeline({
+    // --- Hero Flip Animation ---
+    const heroTl = gsap.timeline({
       scrollTrigger: {
         trigger: "#home",
         start: "top top",
@@ -99,12 +189,11 @@ export default function Home() {
       },
     });
 
-    // Realistic Flip with controlled Lift
-    tl.to(card, {
+    heroTl.to(card, {
       y: "100vh",
       x: "25vw",
       rotateY: 180,
-      z: 100, // Reduced lift to prevent distortion
+      z: 100,
       duration: 1,
       ease: "power2.inOut",
     }).to(
@@ -122,33 +211,51 @@ export default function Home() {
     const backGlare = card.querySelector(".back-glare");
 
     if (frontGlare) {
-      tl.to(
-        frontGlare,
-        {
-          xPercent: 200,
-          opacity: 0,
-          duration: 0.5,
-          ease: "none",
-        },
-        0,
-      );
+      heroTl.to(frontGlare, { xPercent: 200, opacity: 0, duration: 0.5, ease: "none" }, 0);
+    }
+    if (backGlare) {
+      heroTl.fromTo(backGlare, { xPercent: -200, opacity: 0 }, { xPercent: 100, opacity: 0.5, duration: 0.5, ease: "none" }, 0.5);
     }
 
-    if (backGlare) {
-      tl.fromTo(
-        backGlare,
-        {
-          xPercent: -200,
-          opacity: 0,
+    // --- Projects Section Pinning & Stacking ---
+    const projectsSection = document.getElementById("projects");
+    if (projectsSection) {
+      const cards = projectsSection.querySelectorAll(".project-card-wrapper");
+      
+      const ptl = gsap.timeline({
+        scrollTrigger: {
+          trigger: projectsSection,
+          start: "top top",
+          end: `+=${(projectsData.websites.length + 0.5) * 100}%`,
+          pin: true,
+          scrub: 0.5,
+          invalidateOnRefresh: true,
+          onToggle: (self) => setIsProjectsActive(self.isActive),
         },
-        {
-          xPercent: 100,
-          opacity: 0.5,
-          duration: 0.5,
-          ease: "none",
-        },
-        0.5,
-      );
+      });
+
+      // Reveal Capsule
+      if (filterCapsuleRef.current) {
+        ptl.fromTo(
+          filterCapsuleRef.current,
+          { opacity: 0, y: -20 },
+          { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+          0.2
+        );
+      }
+
+      cards.forEach((card, i) => {
+        ptl.fromTo(
+          card,
+          { y: "100vh", opacity: 0, scale: 0.9 },
+          { y: 0, opacity: 1, scale: 1, duration: 1, ease: "power2.out" },
+          i * 1 + 0.5
+        );
+
+        if (i > 0) {
+          ptl.to(cards[i - 1], { scale: 0.95, opacity: 0.8, duration: 1, ease: "none" }, i * 1 + 0.5);
+        }
+      });
     }
 
     return () => {
@@ -160,7 +267,7 @@ export default function Home() {
     <>
       <SmoothScroll>
         <main ref={containerRef} className="min-h-screen bg-background">
-          <Navbar />
+          <Navbar isProjectsActive={isProjectsActive} />
 
           {/* Pass cardRef to Hero */}
           <HeroInternal cardRef={cardRef} />
@@ -198,9 +305,58 @@ export default function Home() {
 
           <section
             id="projects"
-            className="h-screen flex items-center justify-center bg-neutral-950"
+            className="relative h-screen bg-neutral-950 overflow-hidden"
           >
-            <h2 className="font-bebas text-6xl text-white/20">Projects</h2>
+            {/* Big Bold Background Heading - Absolute Middle */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+              <h2 className="font-bebas text-[25vw] leading-none text-white/5 font-normal tracking-tighter text-center">
+                PROJECTS
+              </h2>
+            </div>
+
+            {/* Top Controls: Filter Capsule */}
+            <div 
+              ref={filterCapsuleRef}
+              className="absolute top-20 left-0 right-0 z-30 flex justify-center px-6 pt-1"
+              style={{ opacity: 0 }} // Hidden initially for GSAP to reveal
+            >
+              <div className="flex bg-white/5 backdrop-blur-md rounded-full p-1 border border-white/10 shadow-xl">
+                 {(["websites", "uiux"] as const).map((cat) => (
+                   <button
+                     key={cat}
+                     onClick={() => setActiveCategory(cat)}
+                     className={cn(
+                       "relative px-8 py-2.5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase transition-colors duration-300",
+                       activeCategory === cat ? "text-black" : "text-white/40 hover:text-white"
+                     )}
+                   >
+                     {activeCategory === cat && (
+                       <motion.div
+                         layoutId="activeFilter"
+                         className="absolute inset-0 bg-accent rounded-full z-0"
+                         transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                       />
+                     )}
+                     <span className="relative z-10">{cat === "websites" ? "Websites" : "UI & UX"}</span>
+                   </button>
+                 ))}
+              </div>
+            </div>
+
+            {/* Stacking Cards Container */}
+            <div className="relative h-full flex items-center justify-center pt-30 z-10">
+              {projectsData.websites.map((_, index) => (
+                <div
+                  key={index}
+                  className="project-card-wrapper absolute w-full max-w-7xl px-6"
+                >
+                  <ProjectCard 
+                    project={projectsData[activeCategory][index]} 
+                    index={index} 
+                  />
+                </div>
+              ))}
+            </div>
           </section>
 
           <section
@@ -452,6 +608,96 @@ const HeroInternal = ({
         </div>
       </motion.div>
     </section>
+  );
+};
+
+const ProjectCard = ({ project, index }: { project: any; index: number }) => {
+  return (
+    <div className="relative w-full h-[70vh] md:h-[80vh] rounded-[2.5rem] border border-white/10 bg-neutral-900 shadow-2xl overflow-hidden flex flex-col md:flex-row">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={project.title}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+          className="flex flex-col md:flex-row w-full h-full"
+        >
+          {/* Subtle interior glow */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(255,255,255,0.03)_0%,_transparent_70%)] pointer-events-none" />
+
+          {/* Content Side */}
+          <div className="p-8 md:p-12 flex flex-col justify-between w-full md:w-1/2 relative z-10">
+            <div>
+              <div className="flex items-center justify-between mb-8">
+                <span className="font-bebas text-7xl text-white/5 select-none text-left">
+                  {project.id}
+                </span>
+                <button className="group relative overflow-hidden rounded-full border border-white/20 px-6 py-2 text-[10px] tracking-widest uppercase font-bold text-white transition-all hover:border-accent">
+                  <span className="relative z-10 group-hover:text-black transition-colors duration-300">
+                    Live Project
+                  </span>
+                  <div className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                </button>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="h-px w-8 bg-accent" />
+                  <p className="text-[10px] tracking-[0.3em] uppercase text-accent font-bold text-left">
+                    CLIENT: {project.client}
+                  </p>
+                </div>
+                <h3 className="font-bebas text-5xl md:text-7xl text-white leading-none text-left">
+                  {project.title}
+                </h3>
+              </div>
+            </div>
+
+            <div className="flex gap-3 flex-wrap mt-8">
+              {project.tags.map((tag: string) => (
+                <span
+                  key={tag}
+                  className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[9px] uppercase tracking-[0.1em] font-semibold text-neutral-400"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Visual Side */}
+          <div className="w-full md:w-1/2 h-full bg-neutral-800/50 relative group overflow-hidden border-t md:border-t-0 md:border-l border-white/10">
+            {project.image ? (
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+              />
+            ) : (
+              <div
+                className={cn(
+                  "w-full h-full bg-gradient-to-br opacity-40 group-hover:opacity-60 transition-opacity duration-700",
+                  project.gradient
+                )}
+              />
+            )}
+            
+            {/* Decorative Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
+            
+            {/* View Icon Overlay */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+               <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-500">
+                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+                 </svg>
+               </div>
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 };
 
