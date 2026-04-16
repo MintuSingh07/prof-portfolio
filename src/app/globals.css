@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "BillaMount";
+  src: url("/BillaMount-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TTRamillas";
+  src: url("/TT%20Ramillas%20Trial%20ExtraBold%20Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -9,8 +24,11 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-bebas: var(--font-bebas-neue);
+  --font-great-vibes: var(--font-great-vibes);
   --font-sans: var(--font-inter);
-  --color-accent: #ccff00;
+  --font-billamount: "BillaMount", sans-serif;
+  --font-ramillas: "TTRamillas", serif;
+  --color-accent: #d4af37;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -47,3 +65,4 @@ html.lenis body {
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
 }
+

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ReactLenis, useLenis } from "lenis/react";
@@ -9,7 +9,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // --- Components ---
 
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
+const NavLink = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) => {
   const lenis = useLenis();
 
   const handleClick = (e: React.MouseEvent) => {
@@ -65,20 +71,22 @@ const Navbar = () => {
   );
 };
 
+
+
 // --- Main Page ---
 
 export default function Home() {
   const cardRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     if (!cardRef.current || !aboutRef.current || !containerRef.current) return;
 
     const card = cardRef.current;
-    
+
     // Create the scroll-linked animation
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -88,7 +96,7 @@ export default function Home() {
         end: "center center",
         scrub: 1.5,
         invalidateOnRefresh: true,
-      }
+      },
     });
 
     // Realistic Flip with controlled Lift
@@ -98,91 +106,121 @@ export default function Home() {
       rotateY: 180,
       z: 100, // Reduced lift to prevent distortion
       duration: 1,
-      ease: "power2.inOut"
-    })
-    .to(card, {
-      z: 0,
-      duration: 0.5,
-      ease: "power2.out"
-    }, "-=0.2");
+      ease: "power2.inOut",
+    }).to(
+      card,
+      {
+        z: 0,
+        duration: 0.5,
+        ease: "power2.out",
+      },
+      "-=0.2",
+    );
 
     // Glare animation
     const frontGlare = card.querySelector(".front-glare");
     const backGlare = card.querySelector(".back-glare");
-    
+
     if (frontGlare) {
-      tl.to(frontGlare, {
-        xPercent: 200,
-        opacity: 0,
-        duration: 0.5,
-        ease: "none"
-      }, 0);
+      tl.to(
+        frontGlare,
+        {
+          xPercent: 200,
+          opacity: 0,
+          duration: 0.5,
+          ease: "none",
+        },
+        0,
+      );
     }
-    
+
     if (backGlare) {
-      tl.fromTo(backGlare, {
-        xPercent: -200,
-        opacity: 0
-      }, {
-        xPercent: 100,
-        opacity: 0.5,
-        duration: 0.5,
-        ease: "none"
-      }, 0.5);
+      tl.fromTo(
+        backGlare,
+        {
+          xPercent: -200,
+          opacity: 0,
+        },
+        {
+          xPercent: 100,
+          opacity: 0.5,
+          duration: 0.5,
+          ease: "none",
+        },
+        0.5,
+      );
     }
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);
 
   return (
-    <SmoothScroll>
-      <main ref={containerRef} className="min-h-screen bg-background">
-        <Navbar />
-        
-        {/* Pass cardRef to Hero */}
-        <HeroInternal cardRef={cardRef} />
+    <>
+      <SmoothScroll>
+        <main ref={containerRef} className="min-h-screen bg-background">
+          <Navbar />
 
-        {/* About Section */}
-        <section 
-          id="about" 
-          ref={aboutRef}
-          className="relative min-h-screen flex items-center px-6 md:px-12 lg:px-20 bg-neutral-950 overflow-hidden"
-        >
-          <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div className="z-10">
-              <h2 className="font-bebas text-8xl md:text-9xl text-white mb-8">About Me</h2>
-              <div className="space-y-6 max-w-xl">
-                <p className="text-lg text-neutral-400 leading-relaxed">
-                  I am a passionate Full-stack Developer and UI/UX Designer who loves to bridge the gap between complex logic and beautiful aesthetics.
-                </p>
-                <p className="text-lg text-neutral-400 leading-relaxed">
-                  With years of experience in the digital space, I specialize in building high-performance, interactive websites that tell a story.
-                </p>
+          {/* Pass cardRef to Hero */}
+          <HeroInternal cardRef={cardRef} />
+
+          {/* About Section */}
+          <section
+            id="about"
+            ref={aboutRef}
+            className="relative min-h-screen flex items-center px-6 md:px-12 lg:px-20 bg-neutral-950 overflow-hidden"
+          >
+            <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left Content */}
+              <div className="z-10">
+                <h2 className="font-bebas text-8xl md:text-9xl text-white mb-8">
+                  About Me
+                </h2>
+                <div className="space-y-6 max-w-xl">
+                  <p className="text-lg text-neutral-400 leading-relaxed">
+                    I am a passionate Full-stack Developer and UI/UX Designer
+                    who loves to bridge the gap between complex logic and
+                    beautiful aesthetics.
+                  </p>
+                  <p className="text-lg text-neutral-400 leading-relaxed">
+                    With years of experience in the digital space, I specialize
+                    in building high-performance, interactive websites that tell
+                    a story.
+                  </p>
+                </div>
               </div>
+
+              {/* Right side is reserved for the card landing */}
+              <div className="hidden lg:block h-[500px]" />
             </div>
-            
-            {/* Right side is reserved for the card landing */}
-            <div className="hidden lg:block h-[500px]" />
-          </div>
-        </section>
+          </section>
 
-        <section id="projects" className="h-screen flex items-center justify-center bg-black">
-          <h2 className="font-bebas text-6xl text-white/20">Projects</h2>
-        </section>
+          <section
+            id="projects"
+            className="h-screen flex items-center justify-center bg-neutral-950"
+          >
+            <h2 className="font-bebas text-6xl text-white/20">Projects</h2>
+          </section>
 
-        <section id="blogs" className="h-screen flex items-center justify-center bg-neutral-950">
-          <h2 className="font-bebas text-6xl text-white/20">Blogs</h2>
-        </section>
-      </main>
-    </SmoothScroll>
+          <section
+            id="blogs"
+            className="h-screen flex items-center justify-center bg-neutral-950"
+          >
+            <h2 className="font-bebas text-6xl text-white/20">Blogs</h2>
+          </section>
+        </main>
+      </SmoothScroll>
+    </>
   );
 }
 
 // Rename Hero to HeroInternal and accept ref
-const HeroInternal = ({ cardRef }: { cardRef: React.RefObject<HTMLDivElement | null> }) => {
+const HeroInternal = ({
+  cardRef,
+}: {
+  cardRef: React.RefObject<HTMLDivElement | null>;
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -193,7 +231,8 @@ const HeroInternal = ({ cardRef }: { cardRef: React.RefObject<HTMLDivElement | n
       if (window.scrollY > 300) return;
 
       const { clientX, clientY } = e;
-      const { left, top, width, height } = containerRef.current.getBoundingClientRect();
+      const { left, top, width, height } =
+        containerRef.current.getBoundingClientRect();
 
       const x = (clientX - left) / width - 0.5;
       const y = (clientY - top) / height - 0.5;
@@ -240,7 +279,9 @@ const HeroInternal = ({ cardRef }: { cardRef: React.RefObject<HTMLDivElement | n
               transition={{ duration: 1, ease: "circOut", delay: 0.4 }}
               className="font-bebas text-[18vw] leading-[0.8] text-white lg:text-[10rem] xl:text-[13rem]"
             >
-              WEB<br className="lg:hidden" />DEV
+              WEB
+              <br className="lg:hidden" />
+              DEV
             </motion.h1>
 
             {/* Central Card Wrapper */}
@@ -249,11 +290,19 @@ const HeroInternal = ({ cardRef }: { cardRef: React.RefObject<HTMLDivElement | n
                 ref={cardRef}
                 initial={{ opacity: 0, rotateX: 180 }}
                 animate={{ opacity: 1, rotateX: 0 }}
-                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+                transition={{
+                  duration: 1.5,
+                  ease: [0.16, 1, 0.3, 1],
+                  delay: 0.3,
+                }}
                 onAnimationComplete={() => {
                   if (cardRef.current) {
                     cardRef.current.style.transform = "";
-                    gsap.set(cardRef.current, { rotateX: 0, rotateY: 0, transformPerspective: 1000 });
+                    gsap.set(cardRef.current, {
+                      rotateX: 0,
+                      rotateY: 0,
+                      transformPerspective: 1000,
+                    });
                   }
                 }}
                 className="relative h-[480px] w-[320px] rounded-[2.5rem] border border-white/10 bg-neutral-900 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)] md:h-[550px] md:w-[380px] [transform-style:preserve-3d]"
@@ -271,12 +320,14 @@ const HeroInternal = ({ cardRef }: { cardRef: React.RefObject<HTMLDivElement | n
                 <div className="absolute inset-0 [backface-visibility:hidden] z-10 [transform-style:preserve-3d]">
                   <div className="absolute inset-0 overflow-hidden rounded-[2.5rem] border border-white/10">
                     <div className="absolute inset-0 bg-neutral-800 flex items-center justify-center">
-                      <div className="text-white/10 font-bebas text-4xl">Creative Portrait</div>
+                      <div className="text-white/10 font-bebas text-4xl">
+                        Creative Portrait
+                      </div>
                     </div>
-                    
+
                     {/* Front Glare */}
                     <div className="front-glare absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 -translate-x-full" />
-                    
+
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   </div>
                 </div>
@@ -286,12 +337,16 @@ const HeroInternal = ({ cardRef }: { cardRef: React.RefObject<HTMLDivElement | n
                   <div className="absolute inset-0 overflow-hidden rounded-[2.5rem] border border-accent/20 bg-neutral-900 flex flex-col items-center justify-center p-8 text-center">
                     {/* Back Glare */}
                     <div className="back-glare absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 -translate-x-full" />
-                    
+
                     <div className="w-20 h-20 rounded-full bg-accent/20 flex items-center justify-center mb-6">
                       <div className="text-accent text-4xl">★</div>
                     </div>
-                    <h3 className="font-bebas text-4xl text-white mb-4">Mintu Creative</h3>
-                    <p className="text-neutral-400 text-sm">Building digital excellence with precision and passion.</p>
+                    <h3 className="font-bebas text-4xl text-white mb-4">
+                      Mintu Creative
+                    </h3>
+                    <p className="text-neutral-400 text-sm">
+                      Building digital excellence with precision and passion.
+                    </p>
                   </div>
                 </div>
 
@@ -307,7 +362,11 @@ const HeroInternal = ({ cardRef }: { cardRef: React.RefObject<HTMLDivElement | n
                     <motion.div
                       initial={{ y: 0 }}
                       animate={{ y: "-100%" }}
-                      transition={{ delay: 3.8, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{
+                        delay: 3.8,
+                        duration: 0.6,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
                       className="absolute inset-0 flex items-center justify-center text-3xl font-bold"
                     >
                       Hi
@@ -316,7 +375,11 @@ const HeroInternal = ({ cardRef }: { cardRef: React.RefObject<HTMLDivElement | n
                     <motion.div
                       initial={{ y: "100%" }}
                       animate={{ y: 0 }}
-                      transition={{ delay: 3.8, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{
+                        delay: 3.8,
+                        duration: 0.6,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
                       className="absolute inset-0 flex items-center justify-center p-4"
                     >
                       <motion.img
@@ -324,7 +387,10 @@ const HeroInternal = ({ cardRef }: { cardRef: React.RefObject<HTMLDivElement | n
                         alt="Waving hand"
                         className="h-full w-full object-contain origin-bottom"
                         animate={{
-                          rotate: [0, 5, -5, 12, -12, 18, -18, 18, -18, 12, -12, 5, -5, 0],
+                          rotate: [
+                            0, 5, -5, 12, -12, 18, -18, 18, -18, 12, -12, 5, -5,
+                            0,
+                          ],
                         }}
                         transition={{
                           delay: 4.4,
@@ -358,7 +424,8 @@ const HeroInternal = ({ cardRef }: { cardRef: React.RefObject<HTMLDivElement | n
                 className="mt-6 max-w-[280px]"
               >
                 <p className="text-sm font-light leading-relaxed text-neutral-400">
-                  Full-stack Web Developer & UI/UX Designer crafting digital experiences.
+                  Full-stack Web Developer & UI/UX Designer crafting digital
+                  experiences.
                 </p>
               </motion.div>
             </div>
@@ -374,13 +441,14 @@ const HeroInternal = ({ cardRef }: { cardRef: React.RefObject<HTMLDivElement | n
       >
         <div className="flex flex-col items-center gap-2">
           <div className="h-10 w-px bg-white/20" />
-          <p className="text-[10px] tracking-[0.2em] uppercase text-white/40">Scroll</p>
+          <p className="text-[10px] tracking-[0.2em] uppercase text-white/40">
+            Scroll
+          </p>
         </div>
       </motion.div>
     </section>
   );
 };
-
 
 const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -396,4 +464,3 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
     </ReactLenis>
   );
 };
-
