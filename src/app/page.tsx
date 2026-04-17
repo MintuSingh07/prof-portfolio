@@ -688,10 +688,12 @@ const HeroInternal = ({
                 {/* Front Side */}
                 <div className="absolute inset-0 [backface-visibility:hidden] z-10 [transform-style:preserve-3d]">
                   <div className="absolute inset-0 overflow-hidden rounded-[2.5rem] border border-white/10">
-                    <div className="absolute inset-0 bg-neutral-800 flex items-center justify-center">
-                      <div className="text-white/10 font-bebas text-4xl">
-                        Creative Portrait
-                      </div>
+                    <div className="absolute inset-0 bg-neutral-800">
+                      <img
+                        src="/self-2.png"
+                        alt="Mintu Portrait"
+                        className="h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
+                      />
                     </div>
 
                     {/* Front Glare */}
