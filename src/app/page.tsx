@@ -540,7 +540,7 @@ export default function Home() {
             <div className="relative h-full flex items-center justify-center pt-24 md:pt-32 z-10">
               {projectsData[activeCategory].map((project, index) => (
                 <div
-                  key={`${activeCategory}-${index}`}
+                  key={index}
                   className="project-card-wrapper absolute w-full max-w-7xl px-6"
                 >
                   <ProjectCard
@@ -829,7 +829,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
     <div className="relative w-full h-[88vh] md:h-[80vh] rounded-[2rem] md:rounded-[2.5rem] border border-white/10 bg-neutral-900 shadow-2xl overflow-hidden flex flex-col md:flex-row">
       <AnimatePresence mode="wait">
         <motion.div
-          key={project.title}
+          key={`${project.id}-${project.title}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
