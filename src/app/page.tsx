@@ -676,6 +676,14 @@ const HeroInternal = ({
   cardRef: React.RefObject<HTMLDivElement | null>;
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (imgRef.current?.complete) {
+      setImageLoaded(true);
+    }
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -774,11 +782,19 @@ const HeroInternal = ({
                 <div className="absolute inset-0 [backface-visibility:hidden] z-10 [transform-style:preserve-3d]">
                   <div className="absolute inset-0 overflow-hidden rounded-[2.5rem] border border-white/10">
                     <div className="absolute inset-0 bg-neutral-800">
+                      {!imageLoaded && (
+                        <div className="absolute inset-0 w-full h-full bg-neutral-700 animate-pulse" />
+                      )}
                       <img
+                        ref={imgRef}
                         src="/self-2.png"
                         alt="Mintu Portrait"
                         loading="lazy"
-                        className="h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
+                        onLoad={() => setImageLoaded(true)}
+                        className={cn(
+                          "h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-700",
+                          imageLoaded ? "opacity-100" : "opacity-0"
+                        )}
                       />
                     </div>
 
@@ -941,6 +957,15 @@ const FigmaIcon = () => (
 );
 
 const ProjectCard = ({ project, index }: { project: any; index: number }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    if (imgRef.current?.complete) {
+      setImageLoaded(true);
+    }
+  }, [project.image]);
+
   return (
     <div className="relative w-full h-[92vh] md:h-[85vh] rounded-[2rem] md:rounded-[2.5rem] border border-white/10 bg-neutral-900 shadow-2xl overflow-hidden flex flex-col md:flex-row">
       <div className="flex flex-col md:flex-row w-full h-full relative">
@@ -1010,12 +1035,27 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
               className="w-full h-full"
             >
               {project.image ? (
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
-                />
+                <>
+                  {!imageLoaded && (
+                    <div
+                      className={cn(
+                        "absolute inset-0 w-full h-full opacity-40 animate-pulse bg-gradient-to-br z-0",
+                        project.gradient
+                      )}
+                    />
+                  )}
+                  <img
+                    ref={imgRef}
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    onLoad={() => setImageLoaded(true)}
+                    className={cn(
+                      "w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105 relative z-10",
+                      imageLoaded ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </>
               ) : (
                 <div
                   className={cn(
