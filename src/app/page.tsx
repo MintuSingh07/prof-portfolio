@@ -12,52 +12,52 @@ const projectsData = {
   websites: [
     {
       id: "01",
-      client: "Nexus Analytics",
-      title: "AI Business Dashboard",
-      description: "A high-performance business intelligence dashboard integrated with AI-driven analytics. It features real-time data visualization, predictive modeling components, and a sleek, dark-themed interface built for data-heavy professional environments.",
-      image: "/projects/nexus.png",
-      tags: ["React", "GSAP", "AI"],
-      gradient: "from-blue-600/20 to-purple-600/20",
-      link: "#",
+      client: "Velvet Pour",
+      title: "Velvet Pour",
+      description: "A luxurious and elegant web experience crafted exclusively for premium brands. This project focuses on delivering a sophisticated aesthetic through the use of smooth, performant animations, high-fidelity imagery, and seamless page transitions, ensuring absolute digital elegance.",
+      image: "/velvet-pour.png",
+      tags: ["Next.js", "Framer Motion", "Premium"],
+      gradient: "from-purple-600/20 to-pink-600/20",
+      link: "https://velvetpourpearl.vercel.app/",
     },
     {
       id: "02",
-      client: "Pixel Forge",
-      title: "Digital Agency Portfolio",
-      description: "A visually stunning digital agency portfolio designed to push the boundaries of web motion. It utilizes advanced GSAP animations and Framer Motion to create an immersive storytelling experience that highlights creative excellence.",
-      image: null,
-      tags: ["Next.js", "Framer Motion"],
-      gradient: "from-amber-500/20 to-orange-600/20",
-      link: "#",
+      client: "Retro Building",
+      title: "Retro Building",
+      description: "A nostalgic yet modern architectural showcase that seamlessly blends retro aesthetics with contemporary web technologies. It features an interactive layout, engaging visual effects, and a highly responsive design, perfectly encapsulating the essence of classic architecture within a modern digital frame.",
+      image: "/retrobuilding.png",
+      tags: ["React", "Aesthetic", "Architecture"],
+      gradient: "from-amber-600/20 to-yellow-700/20",
+      link: "https://retrobuilding.vercel.app/",
     },
     {
       id: "03",
-      client: "Cloud Horizon",
-      title: "SaaS Marketing Site",
-      description: "A conversion-optimized SaaS marketing platform featuring a modular design system and advanced responsive architecture. It focuses on clear value propositions, interactive pricing models, and seamless user onboarding flows.",
-      image: null,
-      tags: ["Tailwind", "Next.js"],
-      gradient: "from-indigo-500/20 to-violet-600/20",
-      link: "#",
+      client: "Zentry",
+      title: "Zentry",
+      description: "A high-performance gaming landing page designed to captivate users with deeply immersive animations and a sleek, futuristic interface. Leveraging GSAP for complex scroll-triggered motion, the platform offers a dynamic and thrilling user journey tailored for the modern gaming community.",
+      image: "/zentry.png",
+      tags: ["Next.js", "GSAP", "Gaming"],
+      gradient: "from-emerald-500/20 to-cyan-600/20",
+      link: "https://zentry-ms.vercel.app/",
     },
     {
       id: "04",
-      client: "Luxe Estate",
-      title: "Architecture Showcase",
-      description: "A cutting-edge architectural portfolio that leverages Three.js to provide an interactive 3D property exploration experience. It bridges the gap between digital property listings and real-world spatial feeling through high-fidelity rendering.",
-      image: null,
-      tags: ["Three.js", "GSAP", "3D"],
-      gradient: "from-emerald-600/20 to-teal-700/20",
-      link: "#",
+      client: "GTA VI",
+      title: "GTA VI Website",
+      description: "A stunning, fan-made immersive experience celebrating the highly anticipated release of GTA VI. The website is characterized by its cinematic transitions, dynamic layout shifts, and bold visual storytelling, mirroring the chaotic yet mesmerizing energy of the game's universe.",
+      image: "/gta-vi.png",
+      tags: ["React", "Animations", "Immersive"],
+      gradient: "from-rose-600/20 to-purple-700/20",
+      link: "https://gta-vi-ms.vercel.app/",
     },
     {
       id: "05",
-      client: "Zenith Hub",
-      title: "Crypto Exchange Platform",
-      description: "A comprehensive cryptocurrency exchange interface with integrated Web3 wallet support and real-time market data streams. Designed for security and speed, it provides a professional-grade trading environment for modern digital assets.",
+      client: "Coming Soon",
+      title: "Project in Development",
+      description: "Stay tuned for more exciting projects. I am constantly working on new, innovative web experiences that push the boundaries of design and interaction.",
       image: null,
-      tags: ["Web3", "Next.js", "Fintech"],
-      gradient: "from-cyan-500/20 to-blue-600/20",
+      tags: ["Coming Soon"],
+      gradient: "from-neutral-700/20 to-neutral-800/20",
       link: "#",
     },
   ],
@@ -389,7 +389,7 @@ export default function Home() {
   const filterCapsuleRef = useRef<HTMLDivElement>(null);
   const [isProjectsActive, setIsProjectsActive] = useState(false);
   const [activeCategory, setActiveCategory] = useState<"websites" | "uiux">(
-    "uiux",
+    "websites",
   );
 
   useEffect(() => {
@@ -589,7 +589,7 @@ export default function Home() {
                   className="absolute top-1 bottom-1 left-1 bg-accent rounded-full z-0"
                   initial={false}
                   animate={{
-                    x: activeCategory === "uiux" ? 0 : "100%",
+                    x: activeCategory === "websites" ? 0 : "100%",
                     width: "calc(50% - 4px)", // Accounts for padding
                   }}
                   transition={{
@@ -599,7 +599,7 @@ export default function Home() {
                     mass: 1
                   }}
                 />
-                {(["uiux", "websites"] as const).map((cat) => (
+                {(["websites", "uiux"] as const).map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
@@ -646,17 +646,20 @@ export default function Home() {
                 &copy; {new Date().getFullYear()} All Rights Reserved
               </p>
               <div className="flex gap-6">
-                {["Instagram", "Twitter", "LinkedIn", "GitHub"].map(
-                  (social) => (
-                    <a
-                      key={social}
-                      href="#"
-                      className="text-neutral-500 hover:text-white transition-colors text-[10px] font-bold tracking-widest uppercase"
-                    >
-                      {social}
-                    </a>
-                  ),
-                )}
+                {[
+                  { name: "LinkedIn", url: "https://www.linkedin.com/in/mintu-singh-z/" },
+                  { name: "GitHub", url: "https://github.com/MintuSingh07" },
+                ].map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neutral-500 hover:text-white transition-colors text-[10px] font-bold tracking-widest uppercase"
+                  >
+                    {social.name}
+                  </a>
+                ))}
               </div>
             </div>
           </footer>
