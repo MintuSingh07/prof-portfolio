@@ -777,6 +777,7 @@ const HeroInternal = ({
                       <img
                         src="/self-2.png"
                         alt="Mintu Portrait"
+                        loading="lazy"
                         className="h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
                       />
                     </div>
@@ -841,6 +842,7 @@ const HeroInternal = ({
                       <motion.img
                         src="/bye.png"
                         alt="Waving hand"
+                        loading="lazy"
                         className="h-full w-full object-contain origin-bottom"
                         animate={{
                           rotate: [
@@ -1011,6 +1013,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
                 <img
                   src={project.image}
                   alt={project.title}
+                  loading="lazy"
                   className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                 />
               ) : (
