@@ -14,51 +14,103 @@ const projectsData = {
       id: "01",
       client: "Nexus Analytics",
       title: "AI Business Dashboard",
+      description: "A high-performance business intelligence dashboard integrated with AI-driven analytics. It features real-time data visualization, predictive modeling components, and a sleek, dark-themed interface built for data-heavy professional environments.",
       image: "/projects/nexus.png",
       tags: ["React", "GSAP", "AI"],
       gradient: "from-blue-600/20 to-purple-600/20",
+      link: "#",
     },
     {
       id: "02",
       client: "Pixel Forge",
       title: "Digital Agency Portfolio",
+      description: "A visually stunning digital agency portfolio designed to push the boundaries of web motion. It utilizes advanced GSAP animations and Framer Motion to create an immersive storytelling experience that highlights creative excellence.",
       image: null,
       tags: ["Next.js", "Framer Motion"],
       gradient: "from-amber-500/20 to-orange-600/20",
+      link: "#",
     },
     {
       id: "03",
       client: "Cloud Horizon",
       title: "SaaS Marketing Site",
+      description: "A conversion-optimized SaaS marketing platform featuring a modular design system and advanced responsive architecture. It focuses on clear value propositions, interactive pricing models, and seamless user onboarding flows.",
       image: null,
       tags: ["Tailwind", "Next.js"],
       gradient: "from-indigo-500/20 to-violet-600/20",
+      link: "#",
+    },
+    {
+      id: "04",
+      client: "Luxe Estate",
+      title: "Architecture Showcase",
+      description: "A cutting-edge architectural portfolio that leverages Three.js to provide an interactive 3D property exploration experience. It bridges the gap between digital property listings and real-world spatial feeling through high-fidelity rendering.",
+      image: null,
+      tags: ["Three.js", "GSAP", "3D"],
+      gradient: "from-emerald-600/20 to-teal-700/20",
+      link: "#",
+    },
+    {
+      id: "05",
+      client: "Zenith Hub",
+      title: "Crypto Exchange Platform",
+      description: "A comprehensive cryptocurrency exchange interface with integrated Web3 wallet support and real-time market data streams. Designed for security and speed, it provides a professional-grade trading environment for modern digital assets.",
+      image: null,
+      tags: ["Web3", "Next.js", "Fintech"],
+      gradient: "from-cyan-500/20 to-blue-600/20",
+      link: "#",
     },
   ],
   uiux: [
     {
       id: "01",
-      client: "Swift Pay",
-      title: "Fintech Mobile App",
+      client: "TR HOST",
+      title: "TR HOST (REDESIGN)",
+      description: "A deep UX exploration and complete visual overhaul of the TP HOST hosting platform. The redesign prioritizes information architecture, streamlined product discovery, and a consistent design system that scales across mobile and desktop environments.",
       image: null,
-      tags: ["App Design", "Banking"],
+      tags: ["Figma", "Redesign", "UX"],
       gradient: "from-emerald-500/20 to-cyan-600/20",
+      link: "https://www.figma.com/design/HpZAg5jSAywh4mMXyzevId/TP-HOST-REDESIGN?node-id=0-1&p=f&t=oBPmQozY0pIHIJLe-0",
     },
     {
       id: "02",
-      client: "Lumina Health",
-      title: "Wellness Platform",
+      client: "Tian",
+      title: "Tian - Ecommerce webapp",
+      description: "A premium e-commerce mobile application interface that focuses on visual storytelling and editorial-style product presentation. It features a fluid checkout experience, sophisticated search filtering, and high-impact typography for brand elevation.",
       image: null,
-      tags: ["MedTech", "UX Research"],
+      tags: ["Ecommerce", "UI Design"],
       gradient: "from-rose-500/20 to-orange-600/20",
+      link: "https://www.figma.com/design/QXNFdVQo7VbXgZhXaTSzyV/Tian---Ecommerce-webapp?node-id=1-2&p=f&t=I2NPaOmboY53G7od-0",
     },
     {
       id: "03",
-      client: "Nova Stream",
-      title: "Entertainment UI",
+      client: "Duevion",
+      title: "DUEVION- Due Management",
+      description: "A streamlined financial management application designed for simplicity and trust. It provides shop owners and individuals with a clean dashboard for tracking payment cycles, automated reminders, and organized financial history in a clutter-free environment.",
       image: null,
-      tags: ["Dark Mode", "Streaming"],
+      tags: ["Fintech", "App Design"],
       gradient: "from-purple-500/20 to-blue-600/20",
+      link: "https://www.figma.com/design/UnhUfSmBda8GkzbkgtuEQa/Duevion?node-id=0-1&p=f&t=eqGWvJWn7h6quyEY-0",
+    },
+    {
+      id: "04",
+      client: "SHOP.CO",
+      title: "SHOP.CO - ECOMMERCE",
+      description: "A robust fashion e-commerce design system that handles complex product variations and dynamic category management. It emphasizes high-fidelity prototyping, user-centric filtering, and a seamless transition from discovery to purchase.",
+      image: null,
+      tags: ["Ecommerce", "Web Design"],
+      gradient: "from-amber-400/20 to-orange-500/20",
+      link: "https://www.figma.com/design/HnkxdHr7LLiAwPwxR3mXRL/Shop.Co-Ecommerce?node-id=0-1&p=f&t=2MbN28UIoYLqDVmn-0",
+    },
+    {
+      id: "05",
+      client: "DExA",
+      title: "DExA - Clothing in style",
+      description: "A minimalist fashion branding and shopping interface that uses whitespace and elegant typography to create a sense of luxury. The UI is architected around high-resolution imagery and a distraction-free navigation system for high-end apparel.",
+      image: null,
+      tags: ["Fashion", "minimal"],
+      gradient: "from-pink-500/20 to-rose-600/20",
+      link: "https://www.figma.com/design/uZXfWwsI87GMz9P4AgVMEf/Shopping-Website--DExA-?node-id=0-1&t=HsG0PUjlPidtS0Kx-0",
     },
   ],
 };
@@ -337,12 +389,59 @@ export default function Home() {
   const filterCapsuleRef = useRef<HTMLDivElement>(null);
   const [isProjectsActive, setIsProjectsActive] = useState(false);
   const [activeCategory, setActiveCategory] = useState<"websites" | "uiux">(
-    "websites",
+    "uiux",
   );
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+    
+    // --- Project Stacking Effect ---
+    // We create the timeline for projects pinning. 
+    // This is handled by a separate ScrollTrigger context.
+    const projectsSection = document.getElementById("projects");
+    if (projectsSection) {
+      const cards = projectsSection.querySelectorAll(".project-card-wrapper");
+      
+      const ptl = gsap.timeline({
+        scrollTrigger: {
+          trigger: projectsSection,
+          id: `projects-trigger-${activeCategory}`,
+          start: "top top",
+          end: `+=${(projectsData[activeCategory].length + 0.5) * 100}%`,
+          pin: true,
+          scrub: 0.5,
+          invalidateOnRefresh: true,
+          onToggle: (self) => setIsProjectsActive(self.isActive),
+        },
+      });
 
+      // Capsule entrance removed from here to prevent glitch on category switch
+
+
+      cards.forEach((card, i) => {
+        ptl.fromTo(
+          card,
+          { y: "100vh", opacity: 0, scale: 0.9 },
+          { y: 0, opacity: 1, scale: 1, duration: 1, ease: "power2.out" },
+          i * 1 + 0.5,
+        );
+
+        if (i > 0) {
+          ptl.to(
+            cards[i - 1],
+            { scale: 0.95, opacity: 0.8, duration: 1, ease: "none" },
+            i * 1 + 0.5,
+          );
+        }
+      });
+    }
+
+    return () => {
+      ScrollTrigger.getById(`projects-trigger-${activeCategory}`)?.kill();
+    };
+  }, [activeCategory]);
+
+  useEffect(() => {
     if (!cardRef.current || !aboutRef.current || !containerRef.current) return;
 
     const card = cardRef.current;
@@ -356,6 +455,7 @@ export default function Home() {
         end: "center center",
         scrub: 1.5,
         invalidateOnRefresh: true,
+        id: "hero-trigger",
       },
     });
 
@@ -398,53 +498,31 @@ export default function Home() {
       );
     }
 
-    // --- Projects Section Pinning & Stacking ---
-    const projectsSection = document.getElementById("projects");
-    if (projectsSection) {
-      const cards = projectsSection.querySelectorAll(".project-card-wrapper");
-
-      const ptl = gsap.timeline({
-        scrollTrigger: {
-          trigger: projectsSection,
-          start: "top top",
-          end: `+=${(projectsData[activeCategory].length + 0.5) * 100}%`,
-          pin: true,
-          scrub: 0.5,
-          invalidateOnRefresh: true,
-          onToggle: (self) => setIsProjectsActive(self.isActive),
+    // --- Persistent Capsule Entrance ---
+    if (filterCapsuleRef.current) {
+      gsap.fromTo(
+        filterCapsuleRef.current,
+        { opacity: 0, y: -20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: "#projects",
+            start: "top top",
+            end: "top top",
+            toggleActions: "play none none none",
+            id: "capsule-entrance",
+          },
         },
-      });
-
-      // Reveal Capsule
-      if (filterCapsuleRef.current) {
-        ptl.fromTo(
-          filterCapsuleRef.current,
-          { opacity: 0, y: -20 },
-          { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
-          0.2,
-        );
-      }
-
-      cards.forEach((card, i) => {
-        ptl.fromTo(
-          card,
-          { y: "100vh", opacity: 0, scale: 0.9 },
-          { y: 0, opacity: 1, scale: 1, duration: 1, ease: "power2.out" },
-          i * 1 + 0.5,
-        );
-
-        if (i > 0) {
-          ptl.to(
-            cards[i - 1],
-            { scale: 0.95, opacity: 0.8, duration: 1, ease: "none" },
-            i * 1 + 0.5,
-          );
-        }
-      });
+      );
     }
 
     return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+       // Only kill the hero trigger on actual unmount
+       ScrollTrigger.getById("hero-trigger")?.kill();
+       ScrollTrigger.getById("capsule-entrance")?.kill();
     };
   }, []);
 
@@ -505,29 +583,33 @@ export default function Home() {
               className="absolute top-20 left-0 right-0 z-30 flex justify-center px-6 pt-1"
               style={{ opacity: 0 }} // Hidden initially for GSAP to reveal
             >
-              <div className="flex bg-white/5 backdrop-blur-md rounded-full p-1 border border-white/10 shadow-xl">
-                {(["websites", "uiux"] as const).map((cat) => (
+              <div className="flex bg-white/5 backdrop-blur-md rounded-full p-1 border border-white/10 shadow-xl relative overflow-hidden">
+                {/* Persistent Sliding Indicator */}
+                <motion.div
+                  className="absolute top-1 bottom-1 left-1 bg-accent rounded-full z-0"
+                  initial={false}
+                  animate={{
+                    x: activeCategory === "uiux" ? 0 : "100%",
+                    width: "calc(50% - 4px)", // Accounts for padding
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 30,
+                    mass: 1
+                  }}
+                />
+                {(["uiux", "websites"] as const).map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
                     className={cn(
-                      "relative px-8 py-2.5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase transition-colors duration-300",
+                      "relative w-28 md:w-32 py-2.5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase transition-colors duration-300 flex items-center justify-center z-10",
                       activeCategory === cat
                         ? "text-black"
                         : "text-white/40 hover:text-white",
                     )}
                   >
-                    {activeCategory === cat && (
-                      <motion.div
-                        layoutId="activeFilter"
-                        className="absolute inset-0 bg-accent rounded-full z-0"
-                        transition={{
-                          type: "spring",
-                          bounce: 0.2,
-                          duration: 0.6,
-                        }}
-                      />
-                    )}
                     <span className="relative z-10">
                       {cat === "websites" ? "Websites" : "UI & UX"}
                     </span>
@@ -826,99 +908,139 @@ const HeroInternal = ({
   );
 };
 
+const FigmaIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 38 57"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+    className="inline-block"
+  >
+    <path
+      d="M19 28.5C19 25.0192 21.8192 22.2 25.3 22.2C28.7808 22.2 31.6 25.0192 31.6 28.5C31.6 31.9808 28.7808 34.8 25.3 34.8C21.8192 34.8 19 31.9808 19 28.5Z"
+    />
+    <path
+      d="M0 47.5C0 44.0192 2.81924 41.2 6.3 41.2H12.7V53.8C12.7 53.8 12.7 53.8 12.7 53.8C12.7 55.5673 11.2673 57 9.5 57C7.73269 57 6.3 55.5673 6.3 53.8C6.3 53.8 6.3 53.8 6.3 53.8V47.5H0Z"
+    />
+    <path
+      d="M19 0H25.3C28.7808 0 31.6 2.81924 31.6 6.3C31.6 9.78076 28.7808 12.6 25.3 12.6H19V0Z"
+    />
+    <path
+      d="M0 28.5C0 25.0192 2.81924 22.2 6.3 22.2H12.7V34.8H6.3C2.81924 34.8 0 31.9808 0 28.5Z"
+    />
+    <path
+      d="M0 6.3C0 2.81924 2.81924 0 6.3 0H12.7V12.6H6.3C2.81924 12.6 0 9.78076 0 6.3Z"
+    />
+  </svg>
+);
+
 const ProjectCard = ({ project, index }: { project: any; index: number }) => {
   return (
-    <div className="relative w-full h-[88vh] md:h-[80vh] rounded-[2rem] md:rounded-[2.5rem] border border-white/10 bg-neutral-900 shadow-2xl overflow-hidden flex flex-col md:flex-row">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={`${project.id}-${project.title}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.4 }}
-          className="flex flex-col md:flex-row w-full h-full"
-        >
-          {/* Subtle interior glow */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(255,255,255,0.03)_0%,_transparent_70%)] pointer-events-none" />
+    <div className="relative w-full h-[92vh] md:h-[85vh] rounded-[2rem] md:rounded-[2.5rem] border border-white/10 bg-neutral-900 shadow-2xl overflow-hidden flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row w-full h-full relative">
+        {/* Subtle interior glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(255,255,255,0.03)_0%,_transparent_70%)] pointer-events-none" />
 
-          {/* Content Side */}
-          <div className="p-8 md:p-12 flex flex-col justify-between w-full md:w-1/2 relative z-10">
-            <div>
-              <div className="flex items-center justify-between mb-8">
-                <span className="font-bebas text-5xl md:text-7xl text-white/5 select-none text-left">
-                  {project.id}
+        {/* Content Side */}
+        <div className="p-8 md:p-12 flex flex-col justify-between w-full md:w-1/2 relative z-10">
+          <div>
+            <div className="flex items-center justify-between mb-8">
+              <span className="font-bebas text-5xl md:text-7xl text-white/5 select-none text-left">
+                {project.id}
+              </span>
+              <button
+                onClick={() => window.open(project.link, "_blank")}
+                className="group relative overflow-hidden rounded-full border border-white/20 px-4 md:px-6 py-1.5 md:py-2 text-[8px] md:text-[10px] tracking-widest uppercase font-bold text-white transition-all hover:border-accent"
+              >
+                <span className="relative z-10 group-hover:text-black transition-colors duration-300 flex items-center gap-2">
+                  {project.link?.includes("figma.com") && <FigmaIcon />}
+                  {project.link?.includes("figma.com")
+                    ? "View in Figma"
+                    : "Live Project"}
                 </span>
-                 <button className="group relative overflow-hidden rounded-full border border-white/20 px-4 md:px-6 py-1.5 md:py-2 text-[8px] md:text-[10px] tracking-widest uppercase font-bold text-white transition-all hover:border-accent">
-                  <span className="relative z-10 group-hover:text-black transition-colors duration-300">
-                    Live Project
-                  </span>
-                  <div className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                </button>
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="h-px w-8 bg-accent" />
-                  <p className="text-[10px] tracking-[0.3em] uppercase text-accent font-bold text-left">
-                    CLIENT: {project.client}
-                  </p>
-                </div>
-                <h3 className="font-bebas text-4xl md:text-7xl text-white leading-none text-left">
-                  {project.title}
-                </h3>
-              </div>
+                <div className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              </button>
             </div>
 
-            <div className="flex gap-3 flex-wrap mt-8">
-              {project.tags.map((tag: string) => (
-                <span
-                  key={tag}
-                  className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[9px] uppercase tracking-[0.1em] font-semibold text-neutral-400"
-                >
-                  {tag}
-                </span>
-              ))}
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="h-px w-8 bg-accent" />
+                <p className="text-[10px] tracking-[0.3em] uppercase text-accent font-bold text-left">
+                  CLIENT: {project.client}
+                </p>
+              </div>
+              <h3 className="font-bebas text-4xl md:text-7xl text-white leading-none text-left">
+                {project.title}
+              </h3>
+              {project.description && (
+                <p className="text-neutral-400 text-xs md:text-sm leading-relaxed max-w-lg text-left line-clamp-5">
+                  {project.description}
+                </p>
+              )}
             </div>
           </div>
 
-          {/* Visual Side */}
-          <div className="w-full md:w-1/2 h-[45%] md:h-full bg-neutral-800/50 relative group overflow-hidden border-t md:border-t-0 md:border-l border-white/10">
-            {project.image ? (
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
-              />
-            ) : (
-              <div
-                className={cn(
-                  "w-full h-full bg-gradient-to-br opacity-40 group-hover:opacity-60 transition-opacity duration-700",
-                  project.gradient,
-                )}
-              />
-            )}
+          <div className="flex gap-3 flex-wrap mt-8">
+            {project.tags.map((tag: string) => (
+              <span
+                key={tag}
+                className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[9px] uppercase tracking-[0.1em] font-semibold text-neutral-400"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
 
-            {/* Decorative Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
+        {/* Visual Side */}
+        <div className="w-full md:w-1/2 h-[45%] md:h-full bg-neutral-800/50 relative group overflow-hidden border-t md:border-t-0 md:border-l border-white/10">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={project.image || project.gradient}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="w-full h-full"
+            >
+              {project.image ? (
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                />
+              ) : (
+                <div
+                  className={cn(
+                    "w-full h-full bg-gradient-to-br opacity-40 group-hover:opacity-60 transition-opacity duration-700",
+                    project.gradient,
+                  )}
+                />
+              )}
+            </motion.div>
+          </AnimatePresence>
 
-            {/* View Icon Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-              <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-500">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                >
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
-                </svg>
-              </div>
+          {/* Decorative Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
+
+          {/* View Icon Overlay */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-500">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="2"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" />
+              </svg>
             </div>
           </div>
-        </motion.div>
-      </AnimatePresence>
+        </div>
+      </div>
     </div>
   );
 };
