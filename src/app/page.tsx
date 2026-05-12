@@ -6,7 +6,15 @@ import gsap from "gsap";
 import { ReactLenis, useLenis } from "lenis/react";
 import { cn } from "@/lib/utils";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Mail, MapPin, ArrowUpRight, Send, CheckCircle2, Menu, X } from "lucide-react";
+import {
+  Mail,
+  MapPin,
+  ArrowUpRight,
+  Send,
+  CheckCircle2,
+  Menu,
+  X,
+} from "lucide-react";
 
 const projectsData = {
   websites: [
@@ -160,7 +168,13 @@ const NavLink = ({
   );
 };
 
-const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+const MobileMenu = ({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -176,7 +190,7 @@ const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
           >
             <X size={32} />
           </button>
-          
+
           <nav className="flex flex-col items-center gap-8">
             {["home", "about", "projects", "contact"].map((id) => (
               <motion.a
@@ -218,18 +232,34 @@ const Navbar = ({ isProjectsActive }: { isProjectsActive: boolean }) => {
         <div className="flex-1 flex justify-center overflow-hidden h-9">
           <AnimatePresence mode="wait">
             {!isProjectsActive ? (
-              <motion.div
-                key="nav-links"
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -20, opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="hidden items-center gap-1 md:flex"
-              >
-                <NavLink href="#home">Home</NavLink>
-                <NavLink href="#about">About</NavLink>
-                <NavLink href="#projects">Projects</NavLink>
-              </motion.div>
+              <>
+                <motion.div
+                  key="nav-links"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="hidden items-center gap-1 md:flex"
+                >
+                  <NavLink href="#home">Home</NavLink>
+                  <NavLink href="#about">About</NavLink>
+                  <NavLink href="#projects">Projects</NavLink>
+                </motion.div>
+
+                {/* Mobile-only branding to fill the center gap */}
+                <motion.div
+                  key="mobile-status"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex items-center md:hidden"
+                >
+                  <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-white/50">
+                    Portfolio / 26
+                  </span>
+                </motion.div>
+              </>
             ) : (
               <motion.div
                 key="available-status"
@@ -272,8 +302,11 @@ const Navbar = ({ isProjectsActive }: { isProjectsActive: boolean }) => {
           </>
         )}
       </nav>
-      
-      <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
+
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+      />
     </motion.header>
   );
 };
@@ -522,8 +555,28 @@ export default function Home() {
 
     heroTl
       .to(card, {
-        y: isMobile ? "140vh" : "100vh",
-        x: isMobile ? 0 : "25vw",
+        y: () => {
+          const zone = document.getElementById("card-landing-zone");
+          if (!zone) return isMobile ? "140vh" : "100vh";
+          const zoneRect = zone.getBoundingClientRect();
+          const cardRect = card.getBoundingClientRect();
+          // Calculate the distance between the current card center and the zone center
+          // Taking into account that the card is already at its initial position
+          const scrollY = window.scrollY;
+          const targetY = zoneRect.top + scrollY + zoneRect.height / 2;
+          const currentY = cardRect.top + scrollY + cardRect.height / 2;
+          return targetY - currentY;
+        },
+        x: () => {
+          if (!isMobile) return "25vw";
+          const zone = document.getElementById("card-landing-zone");
+          if (!zone) return 0;
+          const zoneRect = zone.getBoundingClientRect();
+          const cardRect = card.getBoundingClientRect();
+          const targetX = zoneRect.left + zoneRect.width / 2;
+          const currentX = cardRect.left + cardRect.width / 2;
+          return targetX - currentX;
+        },
         rotateY: 180,
         z: 100,
         duration: 1,
@@ -623,7 +676,10 @@ export default function Home() {
               </div>
 
               {/* Card Landing Zone - Always present to take up space on mobile */}
-              <div className="h-[350px] sm:h-[450px] lg:h-[600px] w-full relative" id="card-landing-zone" />
+              <div
+                className="h-[350px] sm:h-[450px] lg:h-[600px] w-full relative"
+                id="card-landing-zone"
+              />
             </div>
           </section>
 
