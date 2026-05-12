@@ -16,8 +16,8 @@
   font-display: swap;
 }
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
   --color-accent: #4ade80;
 }
 
@@ -30,13 +30,6 @@
   --font-billamount: "BillaMount", sans-serif;
   --font-ramillas: "TTRamillas", serif;
   --color-accent: var(--color-accent);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

@@ -6,59 +6,64 @@ import gsap from "gsap";
 import { ReactLenis, useLenis } from "lenis/react";
 import { cn } from "@/lib/utils";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Mail, MapPin, ArrowUpRight, Send, CheckCircle2 } from "lucide-react";
+import { Mail, MapPin, ArrowUpRight, Send, CheckCircle2, Menu, X } from "lucide-react";
 
 const projectsData = {
   websites: [
     {
       id: "01",
+      client: "npm Package",
+      title: "SWT (secure-web-token)",
+      description:
+        "Engineered a next-gen device-bound auth library for Node.js using AES-256-GCM encryption + server-side session binding — rendering stolen tokens cryptographically useless; adopted by SaaS dashboards, admin panels, and high-security APIs. 50,000+ total downloads and 7,000–8,000 weekly active installs; independently built, published, and maintained with zero external contributors.",
+      image: "/swt.png",
+      tags: ["Node.js", "Security", "npm", "Encryption"],
+      gradient: "from-indigo-600/20 to-blue-600/20",
+      link: "https://www.npmjs.com/package/secure-web-token",
+    },
+    {
+      id: "02",
       client: "Velvet Pour",
       title: "Velvet Pour",
-      description: "A luxurious and elegant web experience crafted exclusively for premium brands. This project focuses on delivering a sophisticated aesthetic through the use of smooth, performant animations, high-fidelity imagery, and seamless page transitions, ensuring absolute digital elegance.",
+      description:
+        "A luxurious and elegant web experience crafted exclusively for premium brands. This project focuses on delivering a sophisticated aesthetic through the use of smooth, performant animations, high-fidelity imagery, and seamless page transitions, ensuring absolute digital elegance.",
       image: "/velvet-pour.png",
       tags: ["Next.js", "Framer Motion", "Premium"],
       gradient: "from-purple-600/20 to-pink-600/20",
       link: "https://velvetpourpearl.vercel.app/",
     },
     {
-      id: "02",
+      id: "03",
       client: "Retro Building",
       title: "Retro Building",
-      description: "A nostalgic yet modern architectural showcase that seamlessly blends retro aesthetics with contemporary web technologies. It features an interactive layout, engaging visual effects, and a highly responsive design, perfectly encapsulating the essence of classic architecture within a modern digital frame.",
+      description:
+        "A nostalgic yet modern architectural showcase that seamlessly blends retro aesthetics with contemporary web technologies. It features an interactive layout, engaging visual effects, and a highly responsive design, perfectly encapsulating the essence of classic architecture within a modern digital frame.",
       image: "/retrobuilding.png",
       tags: ["React", "Aesthetic", "Architecture"],
       gradient: "from-amber-600/20 to-yellow-700/20",
       link: "https://retrobuilding.vercel.app/",
     },
     {
-      id: "03",
+      id: "04",
       client: "Zentry",
       title: "Zentry",
-      description: "A high-performance gaming landing page designed to captivate users with deeply immersive animations and a sleek, futuristic interface. Leveraging GSAP for complex scroll-triggered motion, the platform offers a dynamic and thrilling user journey tailored for the modern gaming community.",
+      description:
+        "A high-performance gaming landing page designed to captivate users with deeply immersive animations and a sleek, futuristic interface. Leveraging GSAP for complex scroll-triggered motion, the platform offers a dynamic and thrilling user journey tailored for the modern gaming community.",
       image: "/zentry.png",
       tags: ["Next.js", "GSAP", "Gaming"],
       gradient: "from-emerald-500/20 to-cyan-600/20",
       link: "https://zentry-ms.vercel.app/",
     },
     {
-      id: "04",
+      id: "05",
       client: "GTA VI",
       title: "GTA VI Website",
-      description: "A stunning, fan-made immersive experience celebrating the highly anticipated release of GTA VI. The website is characterized by its cinematic transitions, dynamic layout shifts, and bold visual storytelling, mirroring the chaotic yet mesmerizing energy of the game's universe.",
+      description:
+        "A stunning, fan-made immersive experience celebrating the highly anticipated release of GTA VI. The website is characterized by its cinematic transitions, dynamic layout shifts, and bold visual storytelling, mirroring the chaotic yet mesmerizing energy of the game's universe.",
       image: "/gta-vi.png",
       tags: ["React", "Animations", "Immersive"],
       gradient: "from-rose-600/20 to-purple-700/20",
       link: "https://gta-vi-ms.vercel.app/",
-    },
-    {
-      id: "05",
-      client: "Coming Soon",
-      title: "Project in Development",
-      description: "Stay tuned for more exciting projects. I am constantly working on new, innovative web experiences that push the boundaries of design and interaction.",
-      image: null,
-      tags: ["Coming Soon"],
-      gradient: "from-neutral-700/20 to-neutral-800/20",
-      link: "#",
     },
   ],
   uiux: [
@@ -66,7 +71,8 @@ const projectsData = {
       id: "01",
       client: "TR HOST",
       title: "TR HOST (REDESIGN)",
-      description: "A deep UX exploration and complete visual overhaul of the TP HOST hosting platform. The redesign prioritizes information architecture, streamlined product discovery, and a consistent design system that scales across mobile and desktop environments.",
+      description:
+        "A deep UX exploration and complete visual overhaul of the TP HOST hosting platform. The redesign prioritizes information architecture, streamlined product discovery, and a consistent design system that scales across mobile and desktop environments.",
       image: null,
       tags: ["Figma", "Redesign", "UX"],
       gradient: "from-emerald-500/20 to-cyan-600/20",
@@ -76,7 +82,8 @@ const projectsData = {
       id: "02",
       client: "Tian",
       title: "Tian - Ecommerce webapp",
-      description: "A premium e-commerce mobile application interface that focuses on visual storytelling and editorial-style product presentation. It features a fluid checkout experience, sophisticated search filtering, and high-impact typography for brand elevation.",
+      description:
+        "A premium e-commerce mobile application interface that focuses on visual storytelling and editorial-style product presentation. It features a fluid checkout experience, sophisticated search filtering, and high-impact typography for brand elevation.",
       image: null,
       tags: ["Ecommerce", "UI Design"],
       gradient: "from-rose-500/20 to-orange-600/20",
@@ -86,7 +93,8 @@ const projectsData = {
       id: "03",
       client: "Duevion",
       title: "DUEVION- Due Management",
-      description: "A streamlined financial management application designed for simplicity and trust. It provides shop owners and individuals with a clean dashboard for tracking payment cycles, automated reminders, and organized financial history in a clutter-free environment.",
+      description:
+        "A streamlined financial management application designed for simplicity and trust. It provides shop owners and individuals with a clean dashboard for tracking payment cycles, automated reminders, and organized financial history in a clutter-free environment.",
       image: null,
       tags: ["Fintech", "App Design"],
       gradient: "from-purple-500/20 to-blue-600/20",
@@ -96,7 +104,8 @@ const projectsData = {
       id: "04",
       client: "SHOP.CO",
       title: "SHOP.CO - ECOMMERCE",
-      description: "A robust fashion e-commerce design system that handles complex product variations and dynamic category management. It emphasizes high-fidelity prototyping, user-centric filtering, and a seamless transition from discovery to purchase.",
+      description:
+        "A robust fashion e-commerce design system that handles complex product variations and dynamic category management. It emphasizes high-fidelity prototyping, user-centric filtering, and a seamless transition from discovery to purchase.",
       image: null,
       tags: ["Ecommerce", "Web Design"],
       gradient: "from-amber-400/20 to-orange-500/20",
@@ -106,7 +115,8 @@ const projectsData = {
       id: "05",
       client: "DExA",
       title: "DExA - Clothing in style",
-      description: "A minimalist fashion branding and shopping interface that uses whitespace and elegant typography to create a sense of luxury. The UI is architected around high-resolution imagery and a distraction-free navigation system for high-end apparel.",
+      description:
+        "A minimalist fashion branding and shopping interface that uses whitespace and elegant typography to create a sense of luxury. The UI is architected around high-resolution imagery and a distraction-free navigation system for high-end apparel.",
       image: null,
       tags: ["Fashion", "minimal"],
       gradient: "from-pink-500/20 to-rose-600/20",
@@ -150,7 +160,47 @@ const NavLink = ({
   );
 };
 
+const MobileMenu = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/95 backdrop-blur-2xl md:hidden"
+        >
+          <button
+            onClick={onClose}
+            className="absolute top-8 right-8 p-2 text-white/50 hover:text-white transition-colors"
+          >
+            <X size={32} />
+          </button>
+          
+          <nav className="flex flex-col items-center gap-8">
+            {["home", "about", "projects", "contact"].map((id) => (
+              <motion.a
+                key={id}
+                href={`#${id}`}
+                onClick={onClose}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="font-bebas text-5xl text-white hover:text-accent transition-colors uppercase tracking-widest"
+              >
+                {id}
+              </motion.a>
+            ))}
+          </nav>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
 const Navbar = ({ isProjectsActive }: { isProjectsActive: boolean }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <motion.header
       initial={{ y: -100, opacity: 0 }}
@@ -202,18 +252,28 @@ const Navbar = ({ isProjectsActive }: { isProjectsActive: boolean }) => {
         </div>
 
         {!isProjectsActive && (
-          <button
-            onClick={() =>
-              document
-                .getElementById("contact")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
-            className="rounded-full bg-white px-4 md:px-5 py-1.5 md:py-2 text-xs md:text-sm font-semibold text-black transition-transform hover:scale-105 active:scale-95"
-          >
-            Contact
-          </button>
+          <>
+            <button
+              onClick={() =>
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="hidden md:block rounded-full bg-white px-4 md:px-5 py-1.5 md:py-2 text-xs md:text-sm font-semibold text-black transition-transform hover:scale-105 active:scale-95"
+            >
+              Contact
+            </button>
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="flex md:hidden p-2 text-white/70 hover:text-white transition-colors"
+            >
+              <Menu size={20} />
+            </button>
+          </>
         )}
       </nav>
+      
+      <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
     </motion.header>
   );
 };
@@ -394,14 +454,14 @@ export default function Home() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    
+
     // --- Project Stacking Effect ---
-    // We create the timeline for projects pinning. 
+    // We create the timeline for projects pinning.
     // This is handled by a separate ScrollTrigger context.
     const projectsSection = document.getElementById("projects");
     if (projectsSection) {
       const cards = projectsSection.querySelectorAll(".project-card-wrapper");
-      
+
       const ptl = gsap.timeline({
         scrollTrigger: {
           trigger: projectsSection,
@@ -416,7 +476,6 @@ export default function Home() {
       });
 
       // Capsule entrance removed from here to prevent glitch on category switch
-
 
       cards.forEach((card, i) => {
         ptl.fromTo(
@@ -459,10 +518,12 @@ export default function Home() {
       },
     });
 
+    const isMobile = window.innerWidth < 1024;
+
     heroTl
       .to(card, {
-        y: "100vh",
-        x: "25vw",
+        y: isMobile ? "140vh" : "100vh",
+        x: isMobile ? 0 : "25vw",
         rotateY: 180,
         z: 100,
         duration: 1,
@@ -520,9 +581,9 @@ export default function Home() {
     }
 
     return () => {
-       // Only kill the hero trigger on actual unmount
-       ScrollTrigger.getById("hero-trigger")?.kill();
-       ScrollTrigger.getById("capsule-entrance")?.kill();
+      // Only kill the hero trigger on actual unmount
+      ScrollTrigger.getById("hero-trigger")?.kill();
+      ScrollTrigger.getById("capsule-entrance")?.kill();
     };
   }, []);
 
@@ -539,21 +600,21 @@ export default function Home() {
           <section
             id="about"
             ref={aboutRef}
-            className="relative min-h-screen flex items-center px-6 md:px-12 lg:px-20 bg-neutral-950 overflow-hidden"
+            className="relative min-h-[120vh] lg:min-h-screen flex flex-col lg:flex-row items-center px-6 md:px-12 lg:px-20 bg-neutral-950 overflow-hidden py-24 lg:py-0"
           >
-            <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-12 items-center">
               {/* Left Content */}
-              <div className="z-10">
-                <h2 className="font-bebas text-6xl md:text-9xl text-white mb-8">
+              <div className="z-10 flex flex-col items-center lg:items-start text-center lg:text-left">
+                <h2 className="font-bebas text-7xl md:text-9xl text-white mb-8">
                   About Me
                 </h2>
                 <div className="space-y-6 max-w-xl">
-                  <p className="text-base md:text-lg text-neutral-400 leading-relaxed">
+                  <p className="text-base sm:text-lg text-neutral-400 leading-relaxed">
                     I am a passionate Full-stack Developer and UI/UX Designer
                     who loves to bridge the gap between complex logic and
                     beautiful aesthetics.
                   </p>
-                  <p className="text-base md:text-lg text-neutral-400 leading-relaxed">
+                  <p className="text-base sm:text-lg text-neutral-400 leading-relaxed">
                     With years of experience in the digital space, I specialize
                     in building high-performance, interactive websites that tell
                     a story.
@@ -561,8 +622,8 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Right side is reserved for the card landing */}
-              <div className="hidden lg:block h-[500px]" />
+              {/* Card Landing Zone - Always present to take up space on mobile */}
+              <div className="h-[350px] sm:h-[450px] lg:h-[600px] w-full relative" id="card-landing-zone" />
             </div>
           </section>
 
@@ -596,7 +657,7 @@ export default function Home() {
                     type: "spring",
                     stiffness: 400,
                     damping: 30,
-                    mass: 1
+                    mass: 1,
                   }}
                 />
                 {(["websites", "uiux"] as const).map((cat) => (
@@ -604,7 +665,7 @@ export default function Home() {
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
                     className={cn(
-                      "relative w-28 md:w-32 py-2.5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase transition-colors duration-300 flex items-center justify-center z-10",
+                      "relative w-24 sm:w-28 md:w-32 py-2 md:py-2.5 rounded-full text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase transition-colors duration-300 flex items-center justify-center z-10",
                       activeCategory === cat
                         ? "text-black"
                         : "text-white/40 hover:text-white",
@@ -625,15 +686,11 @@ export default function Home() {
                   key={index}
                   className="project-card-wrapper absolute w-full max-w-7xl px-6"
                 >
-                  <ProjectCard
-                    project={project}
-                    index={index}
-                  />
+                  <ProjectCard project={project} index={index} />
                 </div>
               ))}
             </div>
           </section>
-
 
           <ContactSection />
 
@@ -647,7 +704,10 @@ export default function Home() {
               </p>
               <div className="flex gap-6">
                 {[
-                  { name: "LinkedIn", url: "https://www.linkedin.com/in/mintu-singh-z/" },
+                  {
+                    name: "LinkedIn",
+                    url: "https://www.linkedin.com/in/mintu-singh-z/",
+                  },
                   { name: "GitHub", url: "https://github.com/MintuSingh07" },
                 ].map((social) => (
                   <a
@@ -739,7 +799,7 @@ const HeroInternal = ({
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, ease: "circOut", delay: 0.4 }}
-              className="font-bebas text-[18vw] leading-[0.8] text-white lg:text-[10rem] xl:text-[13rem] z-10"
+              className="font-bebas text-[22vw] sm:text-[18vw] leading-[0.8] text-white lg:text-[10rem] xl:text-[13rem] z-10"
             >
               WEB
               <br className="lg:hidden" />
@@ -767,7 +827,7 @@ const HeroInternal = ({
                     });
                   }
                 }}
-                className="relative h-[340px] w-[240px] sm:h-[480px] sm:w-[320px] rounded-[2rem] sm:rounded-[2.5rem] border border-white/10 bg-neutral-900 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)] md:h-[550px] md:w-[380px] [transform-style:preserve-3d]"
+                className="relative h-[400px] w-[280px] sm:h-[480px] sm:w-[320px] rounded-[2rem] sm:rounded-[2.5rem] border border-white/10 bg-neutral-900 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.7)] md:h-[550px] md:w-[380px] [transform-style:preserve-3d]"
               >
                 {/* Thickness Layers */}
                 {[...Array(6)].map((_, i) => (
@@ -793,7 +853,7 @@ const HeroInternal = ({
                         onLoad={() => setImageLoaded(true)}
                         className={cn(
                           "h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-700",
-                          imageLoaded ? "opacity-100" : "opacity-0"
+                          imageLoaded ? "opacity-100" : "opacity-0",
                         )}
                       />
                     </div>
@@ -806,20 +866,44 @@ const HeroInternal = ({
                 </div>
 
                 {/* Back Side */}
-                <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] z-0 [transform-style:preserve-3d]">
-                  <div className="absolute inset-0 overflow-hidden rounded-[2.5rem] border border-accent/20 bg-neutral-900 flex flex-col items-center justify-center p-8 text-center">
+                <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)_translateZ(6px)] z-0 [transform-style:preserve-3d]">
+                  <div className="absolute inset-0 overflow-hidden rounded-[2.5rem] border border-accent/20 bg-neutral-900 flex flex-col items-center justify-center p-6 sm:p-8 text-center">
                     {/* Back Glare */}
                     <div className="back-glare absolute inset-0 bg-gradient-to-tr from-white/0 via-white/10 to-white/0 -translate-x-full" />
 
-                    <div className="w-20 h-20 rounded-full bg-accent/20 flex items-center justify-center mb-6">
-                      <div className="text-accent text-4xl">★</div>
+                    <div className="flex flex-col items-center mb-4 sm:mb-6 relative z-10">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/10 bg-white/5 flex items-center justify-center mb-3 sm:mb-4 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-accent/20 blur-md animate-pulse" />
+                        <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-accent rounded-full shadow-[0_0_15px_rgba(74,222,128,0.8)]" />
+                      </div>
+                      <h3 className="font-bebas text-4xl sm:text-5xl text-white tracking-[0.1em] leading-none">
+                        VISION
+                      </h3>
                     </div>
-                    <h3 className="font-bebas text-4xl text-white mb-4">
-                      Mintu Creative
-                    </h3>
-                    <p className="text-neutral-400 text-sm">
-                      Building digital excellence with precision and passion.
-                    </p>
+
+                    <div className="w-full text-center px-1 sm:px-2 relative z-10 space-y-4 sm:space-y-6">
+                      <p className="text-white/90 text-[14px] sm:text-[15px] leading-relaxed font-light italic">
+                        "The web should be{" "}
+                        <span className="text-white font-bold not-italic">
+                          felt
+                        </span>
+                        , not just seen."
+                      </p>
+
+                      <div className="h-px w-12 bg-white/10 mx-auto" />
+
+                      <p className="text-neutral-400 text-xs leading-relaxed">
+                        By fusing high-end design with merciless performance, I
+                        craft digital experiences that refuse to be ignored.
+                        Every pixel has a purpose.
+                      </p>
+
+                      <div className="pt-2 sm:pt-4">
+                        <p className="text-accent text-[9px] sm:text-[10px] tracking-[0.3em] sm:tracking-[0.4em] font-bold uppercase inline-block border border-accent/30 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 bg-accent/5">
+                          Stay Inspired
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -886,7 +970,7 @@ const HeroInternal = ({
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1, ease: "circOut", delay: 0.6 }}
-                className="font-bebas text-[18vw] leading-[0.8] text-white lg:text-[10rem] xl:text-[13rem]"
+                className="font-bebas text-[22vw] sm:text-[18vw] leading-[0.8] text-white lg:text-[10rem] xl:text-[13rem]"
               >
                 DESIGNER
               </motion.h1>
@@ -902,13 +986,18 @@ const HeroInternal = ({
                   experiences.
                 </p>
               </motion.div>
+
+              {/* Mobile Color Switcher - Positioned directly under text */}
+              <div className="mt-12 md:hidden">
+                <ColorSwitcher />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Color Switcher — Bottom Right */}
-      <div className="absolute bottom-12 right-12 z-50">
+      {/* Color Switcher — Bottom Right (Desktop Only) */}
+      <div className="hidden md:block absolute md:bottom-12 md:right-12 z-50">
         <ColorSwitcher />
       </div>
 
@@ -938,21 +1027,11 @@ const FigmaIcon = () => (
     xmlns="http://www.w3.org/2000/svg"
     className="inline-block"
   >
-    <path
-      d="M19 28.5C19 25.0192 21.8192 22.2 25.3 22.2C28.7808 22.2 31.6 25.0192 31.6 28.5C31.6 31.9808 28.7808 34.8 25.3 34.8C21.8192 34.8 19 31.9808 19 28.5Z"
-    />
-    <path
-      d="M0 47.5C0 44.0192 2.81924 41.2 6.3 41.2H12.7V53.8C12.7 53.8 12.7 53.8 12.7 53.8C12.7 55.5673 11.2673 57 9.5 57C7.73269 57 6.3 55.5673 6.3 53.8C6.3 53.8 6.3 53.8 6.3 53.8V47.5H0Z"
-    />
-    <path
-      d="M19 0H25.3C28.7808 0 31.6 2.81924 31.6 6.3C31.6 9.78076 28.7808 12.6 25.3 12.6H19V0Z"
-    />
-    <path
-      d="M0 28.5C0 25.0192 2.81924 22.2 6.3 22.2H12.7V34.8H6.3C2.81924 34.8 0 31.9808 0 28.5Z"
-    />
-    <path
-      d="M0 6.3C0 2.81924 2.81924 0 6.3 0H12.7V12.6H6.3C2.81924 12.6 0 9.78076 0 6.3Z"
-    />
+    <path d="M19 28.5C19 25.0192 21.8192 22.2 25.3 22.2C28.7808 22.2 31.6 25.0192 31.6 28.5C31.6 31.9808 28.7808 34.8 25.3 34.8C21.8192 34.8 19 31.9808 19 28.5Z" />
+    <path d="M0 47.5C0 44.0192 2.81924 41.2 6.3 41.2H12.7V53.8C12.7 53.8 12.7 53.8 12.7 53.8C12.7 55.5673 11.2673 57 9.5 57C7.73269 57 6.3 55.5673 6.3 53.8C6.3 53.8 6.3 53.8 6.3 53.8V47.5H0Z" />
+    <path d="M19 0H25.3C28.7808 0 31.6 2.81924 31.6 6.3C31.6 9.78076 28.7808 12.6 25.3 12.6H19V0Z" />
+    <path d="M0 28.5C0 25.0192 2.81924 22.2 6.3 22.2H12.7V34.8H6.3C2.81924 34.8 0 31.9808 0 28.5Z" />
+    <path d="M0 6.3C0 2.81924 2.81924 0 6.3 0H12.7V12.6H6.3C2.81924 12.6 0 9.78076 0 6.3Z" />
   </svg>
 );
 
@@ -967,8 +1046,8 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
   }, [project.image]);
 
   return (
-    <div className="relative w-full h-[92vh] md:h-[85vh] rounded-[2rem] md:rounded-[2.5rem] border border-white/10 bg-neutral-900 shadow-2xl overflow-hidden flex flex-col md:flex-row">
-      <div className="flex flex-col md:flex-row w-full h-full relative">
+    <div className="relative w-full h-[85vh] sm:h-[80vh] md:h-[85vh] rounded-[2rem] md:rounded-[2.5rem] border border-white/10 bg-neutral-900 shadow-2xl overflow-hidden flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row w-full h-full relative overflow-y-auto md:overflow-hidden">
         {/* Subtle interior glow */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,_rgba(255,255,255,0.03)_0%,_transparent_70%)] pointer-events-none" />
 
@@ -981,7 +1060,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
               </span>
               <button
                 onClick={() => window.open(project.link, "_blank")}
-                className="group relative overflow-hidden rounded-full border border-white/20 px-4 md:px-6 py-1.5 md:py-2 text-[8px] md:text-[10px] tracking-widest uppercase font-bold text-white transition-all hover:border-accent"
+                className="group relative overflow-hidden rounded-full border border-white/20 px-4 md:px-6 py-2 md:py-2 text-[9px] md:text-[10px] tracking-widest uppercase font-bold text-white transition-all hover:border-accent"
               >
                 <span className="relative z-10 group-hover:text-black transition-colors duration-300 flex items-center gap-2">
                   {project.link?.includes("figma.com") && <FigmaIcon />}
@@ -1011,11 +1090,11 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
             </div>
           </div>
 
-          <div className="flex gap-3 flex-wrap mt-8">
+          <div className="flex gap-2 sm:gap-3 flex-wrap mt-6 md:mt-8">
             {project.tags.map((tag: string) => (
               <span
                 key={tag}
-                className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[9px] uppercase tracking-[0.1em] font-semibold text-neutral-400"
+                className="px-3 md:px-4 py-1 md:py-1.5 rounded-full bg-white/5 border border-white/10 text-[8px] md:text-[9px] uppercase tracking-[0.1em] font-semibold text-neutral-400"
               >
                 {tag}
               </span>
@@ -1024,7 +1103,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
         </div>
 
         {/* Visual Side */}
-        <div className="w-full md:w-1/2 h-[45%] md:h-full bg-neutral-800/50 relative group overflow-hidden border-t md:border-t-0 md:border-l border-white/10">
+        <div className="w-full md:w-1/2 h-[40%] sm:h-[45%] md:h-full bg-neutral-800/50 relative group overflow-hidden border-t md:border-t-0 md:border-l border-white/10 shrink-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={project.image || project.gradient}
@@ -1040,7 +1119,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
                     <div
                       className={cn(
                         "absolute inset-0 w-full h-full opacity-40 animate-pulse bg-gradient-to-br z-0",
-                        project.gradient
+                        project.gradient,
                       )}
                     />
                   )}
@@ -1052,7 +1131,7 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
                     onLoad={() => setImageLoaded(true)}
                     className={cn(
                       "w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105 relative z-10",
-                      imageLoaded ? "opacity-100" : "opacity-0"
+                      imageLoaded ? "opacity-100" : "opacity-0",
                     )}
                   />
                 </>
@@ -1107,7 +1186,7 @@ const ColorSwitcher = () => {
   };
 
   return (
-    <div className="relative flex items-center justify-end h-10 min-w-[120px]">
+    <div className="relative flex items-center justify-center md:justify-end h-10 min-w-[120px]">
       <div className="flex items-center">
         {themes.map((theme, index) => (
           <motion.button
