@@ -22,8 +22,18 @@ const projectsData = {
       id: "01",
       client: "npm Package",
       title: "SWT (secure-web-token)",
-      description:
-        "Engineered a next-gen device-bound auth library for Node.js using AES-256-GCM encryption + server-side session binding — rendering stolen tokens cryptographically useless; adopted by SaaS dashboards, admin panels, and high-security APIs. 50,000+ total downloads and 7,000–8,000 weekly active installs; independently built, published, and maintained with zero external contributors.",
+      description: (
+        <>
+          <span className="text-accent font-bold">50,000+ TOTAL DOWNLOADS</span>{" "}
+          |{" "}
+          <span className="text-accent font-bold">
+            7,000–8,000 WEEKLY ORGANIC INSTALLS
+          </span>{" "}
+          — Engineered a next-gen device-bound auth library for Node.js using
+          AES-256-GCM encryption; independently maintained with zero external
+          contributors.
+        </>
+      ),
       image: "/swt.png",
       tags: ["Node.js", "Security", "npm", "Encryption"],
       gradient: "from-indigo-600/20 to-blue-600/20",
@@ -557,20 +567,18 @@ export default function Home() {
       .to(card, {
         y: () => {
           const zone = document.getElementById("card-landing-zone");
-          if (!zone) return isMobile ? "140vh" : "100vh";
+          if (!zone || !card) return isMobile ? window.innerHeight * 1.4 : window.innerHeight;
           const zoneRect = zone.getBoundingClientRect();
           const cardRect = card.getBoundingClientRect();
-          // Calculate the distance between the current card center and the zone center
-          // Taking into account that the card is already at its initial position
           const scrollY = window.scrollY;
           const targetY = zoneRect.top + scrollY + zoneRect.height / 2;
           const currentY = cardRect.top + scrollY + cardRect.height / 2;
           return targetY - currentY;
         },
         x: () => {
-          if (!isMobile) return "25vw";
+          if (!isMobile) return window.innerWidth * 0.25;
           const zone = document.getElementById("card-landing-zone");
-          if (!zone) return 0;
+          if (!zone || !card) return 0;
           const zoneRect = zone.getBoundingClientRect();
           const cardRect = card.getBoundingClientRect();
           const targetX = zoneRect.left + zoneRect.width / 2;
@@ -1139,9 +1147,9 @@ const ProjectCard = ({ project, index }: { project: any; index: number }) => {
                 {project.title}
               </h3>
               {project.description && (
-                <p className="text-neutral-400 text-xs md:text-sm leading-relaxed max-w-lg text-left line-clamp-5">
+                <div className="text-neutral-400 text-xs md:text-sm leading-relaxed max-w-lg text-left line-clamp-5">
                   {project.description}
-                </p>
+                </div>
               )}
             </div>
           </div>
