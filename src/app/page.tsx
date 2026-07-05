@@ -91,7 +91,7 @@ const projectsData = {
       title: "TR HOST (REDESIGN)",
       description:
         "A deep UX exploration and complete visual overhaul of the TP HOST hosting platform. The redesign prioritizes information architecture, streamlined product discovery, and a consistent design system that scales across mobile and desktop environments.",
-      image: null,
+      image: "/tp-host.png",
       tags: ["Figma", "Redesign", "UX"],
       gradient: "from-emerald-500/20 to-cyan-600/20",
       link: "https://www.figma.com/design/HpZAg5jSAywh4mMXyzevId/TP-HOST-REDESIGN?node-id=0-1&p=f&t=oBPmQozY0pIHIJLe-0",
@@ -102,7 +102,7 @@ const projectsData = {
       title: "Tian - Ecommerce webapp",
       description:
         "A premium e-commerce mobile application interface that focuses on visual storytelling and editorial-style product presentation. It features a fluid checkout experience, sophisticated search filtering, and high-impact typography for brand elevation.",
-      image: null,
+      image: "/tian.png",
       tags: ["Ecommerce", "UI Design"],
       gradient: "from-rose-500/20 to-orange-600/20",
       link: "https://www.figma.com/design/QXNFdVQo7VbXgZhXaTSzyV/Tian---Ecommerce-webapp?node-id=1-2&p=f&t=I2NPaOmboY53G7od-0",
@@ -113,7 +113,7 @@ const projectsData = {
       title: "DUEVION- Due Management",
       description:
         "A streamlined financial management application designed for simplicity and trust. It provides shop owners and individuals with a clean dashboard for tracking payment cycles, automated reminders, and organized financial history in a clutter-free environment.",
-      image: null,
+      image: "/duevion.png",
       tags: ["Fintech", "App Design"],
       gradient: "from-purple-500/20 to-blue-600/20",
       link: "https://www.figma.com/design/UnhUfSmBda8GkzbkgtuEQa/Duevion?node-id=0-1&p=f&t=eqGWvJWn7h6quyEY-0",
@@ -124,7 +124,7 @@ const projectsData = {
       title: "SHOP.CO - ECOMMERCE",
       description:
         "A robust fashion e-commerce design system that handles complex product variations and dynamic category management. It emphasizes high-fidelity prototyping, user-centric filtering, and a seamless transition from discovery to purchase.",
-      image: null,
+      image: "/shop_co.png",
       tags: ["Ecommerce", "Web Design"],
       gradient: "from-amber-400/20 to-orange-500/20",
       link: "https://www.figma.com/design/HnkxdHr7LLiAwPwxR3mXRL/Shop.Co-Ecommerce?node-id=0-1&p=f&t=2MbN28UIoYLqDVmn-0",
@@ -135,7 +135,7 @@ const projectsData = {
       title: "DExA - Clothing in style",
       description:
         "A minimalist fashion branding and shopping interface that uses whitespace and elegant typography to create a sense of luxury. The UI is architected around high-resolution imagery and a distraction-free navigation system for high-end apparel.",
-      image: null,
+      image: "/dexa.png",
       tags: ["Fashion", "minimal"],
       gradient: "from-pink-500/20 to-rose-600/20",
       link: "https://www.figma.com/design/uZXfWwsI87GMz9P4AgVMEf/Shopping-Website--DExA-?node-id=0-1&t=HsG0PUjlPidtS0Kx-0",
