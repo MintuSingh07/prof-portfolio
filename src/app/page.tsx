@@ -234,8 +234,8 @@ const Navbar = ({ isProjectsActive }: { isProjectsActive: boolean }) => {
     >
       <nav className="flex items-center gap-2 rounded-full border border-white/10 bg-black/50 p-1.5 backdrop-blur-xl min-w-[240px] md:min-w-[300px] justify-between">
         <div className="flex items-center gap-1 pl-1">
-          <div className="h-8 w-8 overflow-hidden rounded-full border border-white/20 bg-white/10">
-            <div className="h-full w-full bg-neutral-800" />
+          <div className="h-8 w-8 rounded-full border border-white/20 bg-white/10 flex items-center justify-center">
+            <span className="font-great-vibes text-sm text-white select-none leading-none translate-y-[2px] translate-x-[-1px]">M</span>
           </div>
         </div>
 
