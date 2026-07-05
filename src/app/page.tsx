@@ -20,6 +20,17 @@ const projectsData = {
   websites: [
     {
       id: "01",
+      client: "Evercrown",
+      title: "Evercrown",
+      description:
+        "A highly aesthetic and interactive digital showcase for Evercrown, featuring fluid animations, a premium dark layout, and high-performance visual storytelling designed to showcase the brand's luxurious and modern identity.",
+      image: "/evercrown.png",
+      tags: ["React", "GSAP", "Aesthetics", "Animations"],
+      gradient: "from-teal-600/20 to-emerald-600/20",
+      link: "https://evercrown-rs.vercel.app/",
+    },
+    {
+      id: "02",
       client: "npm Package",
       title: "SWT (secure-web-token)",
       description: (
@@ -40,7 +51,7 @@ const projectsData = {
       link: "https://www.npmjs.com/package/secure-web-token",
     },
     {
-      id: "02",
+      id: "03",
       client: "Velvet Pour",
       title: "Velvet Pour",
       description:
@@ -51,7 +62,7 @@ const projectsData = {
       link: "https://velvetpourpearl.vercel.app/",
     },
     {
-      id: "03",
+      id: "04",
       client: "Retro Building",
       title: "Retro Building",
       description:
@@ -60,17 +71,6 @@ const projectsData = {
       tags: ["React", "Aesthetic", "Architecture"],
       gradient: "from-amber-600/20 to-yellow-700/20",
       link: "https://retrobuilding.vercel.app/",
-    },
-    {
-      id: "04",
-      client: "Zentry",
-      title: "Zentry",
-      description:
-        "A high-performance gaming landing page designed to captivate users with deeply immersive animations and a sleek, futuristic interface. Leveraging GSAP for complex scroll-triggered motion, the platform offers a dynamic and thrilling user journey tailored for the modern gaming community.",
-      image: "/zentry.png",
-      tags: ["Next.js", "GSAP", "Gaming"],
-      gradient: "from-emerald-500/20 to-cyan-600/20",
-      link: "https://zentry-ms.vercel.app/",
     },
     {
       id: "05",
